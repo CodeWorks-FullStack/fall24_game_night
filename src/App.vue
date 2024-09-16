@@ -31,7 +31,7 @@ function increaseScore(player) {
 </script>
 
 <template>
-  <main>
+  <header>
     <div class="container">
       <section class="row">
         <div class="col-12">
@@ -40,6 +40,10 @@ function increaseScore(player) {
           </div>
         </div>
       </section>
+    </div>
+  </header>
+  <main>
+    <div class="container">
       <section class="row">
         <!-- NOTE generates a col-lg-6 for each player in our players array. Also creates a scoped player variable that is only accessible in the HTML that is being iterated over -->
         <!-- NOTE the key attribute should be a unique value from the items that are being iterated over  -->
