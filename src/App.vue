@@ -75,7 +75,7 @@ function increaseScore(player) {
       </section>
       <section class="row">
         <div class="col-12">
-          <!-- NOTE all logic from PlayerForm is injected right here into the HTML -->
+          <!-- NOTE all logic (HTML, CSS, JS) from PlayerForm is injected right here into the HTML -->
           <PlayerForm />
         </div>
       </section>
