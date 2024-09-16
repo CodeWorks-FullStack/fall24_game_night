@@ -1,12 +1,25 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { AppState } from './AppState.js'
 import { playersService } from './services/PlayersService.js';
+import PlayerForm from './components/globals/PlayerForm.vue';
 // NOTE anything declared in here is referred to as component state
 
 // const score = ref(0)
 
+// NOTE we will use computeds to bring in values from the AppState when dealing with APIs
 const players = AppState.players
+
+// NOTE a computed must return a value
+const topScore = computed(() => {
+  let highestScore = 0
+  players.forEach(player => {
+    if (player.score > highestScore) {
+      highestScore = player.score
+    }
+  })
+  return highestScore
+})
 
 function decreaseScore(player) {
   playersService.decreaseScore(player)
@@ -37,15 +50,24 @@ function increaseScore(player) {
               <!-- NOTE single colon in front of an attribute allows us to bind javascript values to HTML attributes -->
               <img :src="player.imgUrl" :alt="'A picture of ' + player.name" class="img-fluid player-img">
               <!-- NOTE double curlies {{}} allows us to bind HTML text content to javascript values -->
-              <h2>{{ player.name }}</h2>
+              <h2>
+                {{ player.name }}
+                <i v-if="player.score == topScore" class="mdi mdi-crown"></i>
+              </h2>
             </div>
             <div class="d-flex align-items-center gap-3">
               <!-- v-on:click="decreaseScore()" is equivalent to @click="decreaseScore()" -->
-              <button @click="decreaseScore(player)" class="btn btn-dark fs-3">-</button>
+              <button @click="decreaseScore(player)" :disabled="player.score < 1" class="btn btn-dark fs-3">-</button>
               <span class="fs-2">{{ player.score }}</span>
               <button @click="increaseScore(player)" class="btn btn-dark fs-3">+</button>
             </div>
           </div>
+        </div>
+      </section>
+      <section class="row">
+        <div class="col-12">
+          <!-- NOTE all logic from PlayerForm is injected right here into the HTML -->
+          <PlayerForm />
         </div>
       </section>
     </div>
