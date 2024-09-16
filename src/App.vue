@@ -1,19 +1,18 @@
 <script setup>
 import { ref } from 'vue'
 import { AppState } from './AppState.js'
+import { playersService } from './services/PlayersService.js';
 // NOTE anything declared in here is referred to as component state
 
-const score = ref(0)
+// const score = ref(0)
 
 const players = AppState.players
 
 function decreaseScore() {
-  if (score.value > 0) {
-    score.value--
-  }
 }
-function increaseScore() {
-  score.value++
+function increaseScore(player) {
+  console.log('increasing score for', player);
+  playersService.increaseScore(player)
 }
 </script>
 
@@ -28,18 +27,22 @@ function increaseScore() {
         </div>
       </section>
       <section class="row">
+        <!-- NOTE generates a col-lg-6 for each player in our players array. Also creates a scoped player variable that is only accessible in the HTML that is being iterated over -->
+        <!-- NOTE the key attribute should be a unique value from the items that are being iterated over  -->
         <div v-for="player in players" :key="player.name" class="col-lg-6 mb-3">
           <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex gap-3 align-items-center">
-              <img
-                src="https://images.unsplash.com/photo-1707765643599-8c60886bf52b?q=80&w=2265&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="Dude on the sidewalk" class="img-fluid player-img">
+              <!-- v-bind:src="player.imgUrl" is equivalent to :src="player.imgUrl" -->
+              <!-- NOTE single colon in front of an attribute allows us to bind javascript values to HTML attributes -->
+              <img :src="player.imgUrl" :alt="'A picture of ' + player.name" class="img-fluid player-img">
+              <!-- NOTE double curlies {{}} allows us to bind HTML text content to javascript values -->
               <h2>{{ player.name }}</h2>
             </div>
             <div class="d-flex align-items-center gap-3">
+              <!-- v-on:click="decreaseScore()" is equivalent to @click="decreaseScore()" -->
               <button @click="decreaseScore()" class="btn btn-dark fs-3">-</button>
-              <span class="fs-2">{{ score }}</span>
-              <button @click="increaseScore()" class="btn btn-dark fs-3">+</button>
+              <span class="fs-2">{{ player.score }}</span>
+              <button @click="increaseScore(player)" class="btn btn-dark fs-3">+</button>
             </div>
           </div>
         </div>
