@@ -1,30 +1,59 @@
 <script setup>
-import Navbar from './components/Navbar.vue';
-import { AppState } from './AppState.js';
+import { ref } from 'vue'
+// NOTE anything declared in here is referred to as component state
+
+const score = ref(0)
+
+function decreaseScore() {
+  if (score.value > 0) {
+    score.value--
+  }
+}
+function increaseScore() {
+  score.value++
+}
 </script>
 
 <template>
-  <header>
-    <Navbar />
-  </header>
   <main>
-    <router-view />
+    <div class="container">
+      <section class="row">
+        <div class="col-12">
+          <div class="text-center">
+            <h1>Game Night</h1>
+          </div>
+        </div>
+      </section>
+      <section class="row">
+        <div class="col-lg-6">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex gap-3 align-items-center">
+              <img
+                src="https://images.unsplash.com/photo-1707765643599-8c60886bf52b?q=80&w=2265&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Dude on the sidewalk" class="img-fluid player-img">
+              <h2>Dude</h2>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+              <!-- NOTE @click is vue's version of onclick -->
+              <button @click="decreaseScore()" class="btn btn-dark fs-3">-</button>
+              <span class="fs-2">{{ score }}</span>
+              <button @click="increaseScore()" class="btn btn-dark fs-3">+</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
-  <footer class="bg-dark text-light">
-    Made with 💖 by CodeWorks
-  </footer>
 </template>
 
 <style lang="scss">
-@import '@/assets/scss/main.scss';
+// NOTE leave this import here or bootstrap will not work!
+@import url(./assets/scss/main.scss);
 
-:root {
-  --main-height: calc(100vh - 32px - 64px);
-}
-
-footer {
-  display: grid;
-  place-content: center;
-  height: 32px;
+.player-img {
+  height: 170px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 50%;
 }
 </style>
