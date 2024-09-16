@@ -58,7 +58,9 @@ function increaseScore(player) {
             <div class="d-flex align-items-center gap-3">
               <!-- v-on:click="decreaseScore()" is equivalent to @click="decreaseScore()" -->
               <button @click="decreaseScore(player)" :disabled="player.score < 1" class="btn btn-dark fs-3">-</button>
-              <span class="fs-2">{{ player.score }}</span>
+              <span class="fs-2" :class="{ 'text-success': player.score == topScore && player.score != 0 }">
+                {{ player.score }}
+              </span>
               <button @click="increaseScore(player)" class="btn btn-dark fs-3">+</button>
             </div>
           </div>
