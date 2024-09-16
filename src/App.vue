@@ -5,9 +5,7 @@ import { playersService } from './services/PlayersService.js';
 import PlayerForm from './components/globals/PlayerForm.vue';
 // NOTE anything declared in here is referred to as component state
 
-// const score = ref(0)
-
-// NOTE we will use computeds to bring in values from the AppState when dealing with APIs
+// NOTE we will use computeds to bring in values from the AppState when dealing with APIs or primitive properties
 const players = AppState.players
 
 // NOTE a computed must return a value
@@ -53,15 +51,19 @@ function increaseScore(player) {
               <!-- v-bind:src="player.imgUrl" is equivalent to :src="player.imgUrl" -->
               <!-- NOTE single colon in front of an attribute allows us to bind javascript values to HTML attributes -->
               <img :src="player.imgUrl" :alt="'A picture of ' + player.name" class="img-fluid player-img">
-              <!-- NOTE double curlies {{}} allows us to bind HTML text content to javascript values -->
               <h2>
+                <!-- NOTE double curlies {{}} allows us to bind HTML text content to javascript values -->
                 {{ player.name }}
+                <!-- NOTE v-if will conditionally render HTML based on conditional -->
                 <i v-if="player.score == topScore" class="mdi mdi-crown"></i>
               </h2>
             </div>
             <div class="d-flex align-items-center gap-3">
               <!-- v-on:click="decreaseScore()" is equivalent to @click="decreaseScore()" -->
+              <!-- NOTE we can pass through reference types as arguments directly from the HTML -->
+              <!-- disabled attribute will automatically be applied based on conditional -->
               <button @click="decreaseScore(player)" :disabled="player.score < 1" class="btn btn-dark fs-3">-</button>
+              <!-- text-success will be apllied as a class based on conditional -->
               <span class="fs-2" :class="{ 'text-success': player.score == topScore && player.score != 0 }">
                 {{ player.score }}
               </span>
@@ -69,6 +71,7 @@ function increaseScore(player) {
             </div>
           </div>
         </div>
+        <!-- NOTE player variable is not accessible here, it is scoped to the above HTML -->
       </section>
       <section class="row">
         <div class="col-12">

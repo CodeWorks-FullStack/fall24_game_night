@@ -1,6 +1,7 @@
 import { AppState } from "@/AppState.js"
 import { Player } from "@/models/Player.js"
 
+// REVIEW not much has changed here!
 class PlayersService {
   createPlayer(playerData) {
     const players = AppState.players
