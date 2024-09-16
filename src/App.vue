@@ -8,7 +8,8 @@ import { playersService } from './services/PlayersService.js';
 
 const players = AppState.players
 
-function decreaseScore() {
+function decreaseScore(player) {
+  playersService.decreaseScore(player)
 }
 function increaseScore(player) {
   console.log('increasing score for', player);
@@ -40,7 +41,7 @@ function increaseScore(player) {
             </div>
             <div class="d-flex align-items-center gap-3">
               <!-- v-on:click="decreaseScore()" is equivalent to @click="decreaseScore()" -->
-              <button @click="decreaseScore()" class="btn btn-dark fs-3">-</button>
+              <button @click="decreaseScore(player)" class="btn btn-dark fs-3">-</button>
               <span class="fs-2">{{ player.score }}</span>
               <button @click="increaseScore(player)" class="btn btn-dark fs-3">+</button>
             </div>
